@@ -68,7 +68,7 @@ Custom-URL-Shortener/
 4. **Run the application:**
 
    ```bash
-   node index.js
+   npm start
    ```
 
    The server will start on `http://localhost:1000/`.
@@ -165,4 +165,3 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Feel free to customize this `README.md` further to align with any additional features or changes you incorporate into your project. 
