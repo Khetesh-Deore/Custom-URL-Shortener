@@ -157,9 +157,4 @@ Access `http://localhost:1000/shortId` in your browser to be redirected to `http
 
 ---
 
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
 
