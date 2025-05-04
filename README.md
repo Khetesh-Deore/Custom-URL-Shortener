@@ -1,6 +1,4 @@
-Certainly! Here's a comprehensive `README.md` file tailored for your [Custom-URL-Shortener](https://github.com/Khetesh-Deore/Custom-URL-Shortener) project. This document outlines the project details, how it works, usage instructions, and the key concepts utilized.
 
----
 
 # Custom URL Shortener
 
@@ -159,9 +157,4 @@ Access `http://localhost:1000/shortId` in your browser to be redirected to `http
 
 ---
 
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
 
