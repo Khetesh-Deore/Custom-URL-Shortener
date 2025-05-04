@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ghar</title>
+	<style>
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			background-color: black;
+			color: white;
+			padding: 20px;
+		}
+
+		h1 {
+			margin-bottom: 20px;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			max-width: 400px;
+		}
+
+		label {
+			margin-bottom: 8px;
+		}
+
+		input {
+			padding: 10px;
+			margin-bottom: 10px;
+			border: none;
+			border-radius: 4px;
+		}
+
+		button {
+			padding: 10px;
+			background-color: #1e90ff;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #0b78d1;
+		}
+
+		p {
+			background-color: #222;
+			padding: 10px;
+			border-radius: 5px;
+		}
+
+		table {
+			margin-top: 20px;
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		th, td {
+			padding: 10px;
+			border: 1px solid #444;
+			text-align: left;
+		}
+
+		th {
+			background-color: #333;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>URL Shortener</h1>
+
+	<% if (locals.id) { %>
+		<p>URL Generated: 
+			<a href="http://localhost:1000/url/<%= id %>" target="_blank" style="color: #1e90ff;">
+				http://localhost:1000/url/<%= id %>
+			</a>
+		</p>
+	<% } %>
+
+	<div>
+		<form action="/url" method="POST">
+			<label for="urlInput">Enter Your Original URL</label>
+			<input id="urlInput" type="text" name="url" placeholder="https://example.com" required>
+			<button type="submit">Generate</button>
+		</form>
+	</div>
+
+	<div>
+		<% if (locals.urls) { %>
+			<table>
+				<thead>
+					<tr>
+						<th>Sr.No</th>
+						<th>Short ID</th>
+						<th>Redirect URL</th>
+						<th>Clicks</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% urls.forEach((url, index) => { %>
+						<tr>
+							<td><%= index + 1 %></td>
+							<td><%= url.shortId %></td>
+							<td><%= url.redirectURL %></td>
+							<td><%= url.visitHistory.length %></td>
+						</tr>
+					<% }); %>
+				</tbody>
+			</table>
+		<% } %>
+	</div>
+</body>
+
+</html>
