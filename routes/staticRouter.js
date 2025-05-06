@@ -4,7 +4,8 @@ const URL = require("../models/url"); // import your model
 
 router.get("/", async (req, res) => {
   try {
-    const allUrls = await URL.find({}); // get all short URLs from DB
+    if(!req.user)return res.redirect("/login");
+    const allUrls = await URL.find({createdBy:req.user._id}); // get all short URLs from DB
     res.render("ghar", {
       urls: allUrls,
     });
@@ -13,5 +14,13 @@ router.get("/", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+router.get("/signup",(req,res)=>{
+  return res.render("signup");
+})
+
+router.get("/login",(req,res)=>{
+  return res.render("login");
+})
 
 module.exports = router;

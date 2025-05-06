@@ -4,23 +4,32 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Ghar</title>
+	<title>URL Shortener</title>
 	<style>
 		body {
 			font-family: Arial, Helvetica, sans-serif;
 			background-color: black;
 			color: white;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			min-height: 100vh;
 			padding: 20px;
 		}
 
 		h1 {
 			margin-bottom: 20px;
+			text-align: center;
 		}
 
 		form {
 			display: flex;
 			flex-direction: column;
 			max-width: 400px;
+			width: 100%;
+			margin-bottom: 30px;
 		}
 
 		label {
@@ -51,22 +60,56 @@
 			background-color: #222;
 			padding: 10px;
 			border-radius: 5px;
+			word-break: break-all;
+			text-align: center;
+			max-width: 90vw;
+		}
+
+		a {
+			color: #1e90ff;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		.table-container {
+			max-width: 100%;
+			overflow-x: auto;
+			margin-top: 20px;
 		}
 
 		table {
-			margin-top: 20px;
 			width: 100%;
+			min-width: 600px;
 			border-collapse: collapse;
+			background-color: #1c1c1c;
+			border-radius: 10px;
+			box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+			text-align: center;
 		}
 
-		th, td {
-			padding: 10px;
-			border: 1px solid #444;
-			text-align: left;
+		th,
+		td {
+			padding: 12px 15px;
+			border: 1px solid #333;
+			word-break: break-word;
+			white-space: pre-wrap;
+			max-width: 300px;
 		}
 
 		th {
 			background-color: #333;
+		}
+
+		td a {
+			color: #00ffff;
+			text-decoration: none;
+		}
+
+		td a:hover {
+			text-decoration: underline;
 		}
 	</style>
 </head>
@@ -75,23 +118,22 @@
 	<h1>URL Shortener</h1>
 
 	<% if (locals.id) { %>
-		<p>URL Generated: 
-			<a href="http://localhost:1000/url/<%= id %>" target="_blank" style="color: #1e90ff;">
+		<p>
+			URL Generated:
+			<a href="http://localhost:1000/url/<%= id %>" target="_blank">
 				http://localhost:1000/url/<%= id %>
 			</a>
 		</p>
 	<% } %>
 
-	<div>
-		<form action="/url" method="POST">
-			<label for="urlInput">Enter Your Original URL</label>
-			<input id="urlInput" type="text" name="url" placeholder="https://example.com" required>
-			<button type="submit">Generate</button>
-		</form>
-	</div>
+	<form action="/url" method="POST">
+		<label for="urlInput">Enter Your Original URL</label>
+		<input id="urlInput" type="text" name="url" placeholder="https://example.com" required>
+		<button type="submit">Generate</button>
+	</form>
 
-	<div>
-		<% if (locals.urls) { %>
+	<% if (locals.urls) { %>
+		<div class="table-container">
 			<table>
 				<thead>
 					<tr>
@@ -106,14 +148,14 @@
 						<tr>
 							<td><%= index + 1 %></td>
 							<td><%= url.shortId %></td>
-							<td><%= url.redirectURL %></td>
+							<td><a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a></td>
 							<td><%= url.visitHistory.length %></td>
 						</tr>
 					<% }); %>
 				</tbody>
 			</table>
-		<% } %>
-	</div>
+		</div>
+	<% } %>
 </body>
 
 </html>
