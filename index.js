@@ -7,8 +7,8 @@ const urlroutes = require("./routes/url");
 const staticRoute= require("./routes/staticRouter")
 const URL = require("./models/url");
 const userRoute=require('./routes/user')
-const {restrictToLoggedinUserOnly,checkAuth}=require('./middleware/auth')
-
+//const {restrictToLoggedinUserOnly,checkAuth}=require('./middleware/auth')
+const { checkForAuthentication,restrictTo}=require('./middleware/auth')
 
 const { timeStamp } = require("console");
 const app = express();
@@ -25,6 +25,7 @@ app.set("views",path.resolve("./views"));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
+app.use(checkForAuthentication);
 
 
 // app.get("/test",async(req,res)=>{
@@ -35,9 +36,9 @@ app.use(cookieParser());
 // })
 
 
-app.use("/url",restrictToLoggedinUserOnly, urlroutes);
+app.use("/url",restrictTo(["NORMAL","ADMIN"]), urlroutes);
 app.use("/user",userRoute);
-app.use("/",checkAuth,staticRoute);
+app.use("/",staticRoute);
 
 app.get("/url/:shortId", async (req, res) => {
   const shortId = req.params.shortId;

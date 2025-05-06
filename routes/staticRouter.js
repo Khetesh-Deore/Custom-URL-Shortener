@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const URL = require("../models/url"); // import your model
+const { restrictTo } = require("../middleware/auth");
 
-router.get("/", async (req, res) => {
+router.get("/",restrictTo(["NORMAL","ADMIN"]),async (req, res) => {
   try {
-    if(!req.user)return res.redirect("/login");
+    //if(!req.user)return res.redirect("/login");
     const allUrls = await URL.find({createdBy:req.user._id}); // get all short URLs from DB
     res.render("ghar", {
       urls: allUrls,
@@ -14,6 +15,13 @@ router.get("/", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+router.get("/admin/urls",restrictTo(["ADMIN"]),async(req,res)=>{
+  const allurls=await URL.find({});
+  return res.render("ghar",{
+    urls:allurls,
+  })
+})
 
 router.get("/signup",(req,res)=>{
   return res.render("signup");
